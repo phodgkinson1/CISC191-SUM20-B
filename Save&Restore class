@@ -1,0 +1,129 @@
+
+//so github won't let me authenticate my credentials for some reason, so I can't get an authenticate token an push anything or make a branch.
+//here is a pretty close to finished save and restore, not set up as individual files since I wanted to test to compile and knew I couldn't add a branch.
+
+//Only things I didn't see when pulling the master over again was the new instrument track for the overlay melody instruments, which seems to have disappeared.
+//However, I included the spot and simple format of where those should go if someone either can see a commit that I can't access, or if we just got rid of it.
+
+//Also I don't know what the save button is going to be called- I couldn't see the branch with a button and added action listener that William Hammond pushed.
+//The basic command is there with /* */ in parentheses.
+
+//Separating these into files requires simply passing the check array and the melody string intrument name in parameters, also commented with /* */
+
+
+
+public class SaveRestore {
+    public class SavePattern{
+        public class /*save button name*/ implements ActionListener {
+            public void actionPerformed (ActionEvent e){
+                SerializeObject currentPattern = new SerializeObject();
+
+                @JsonIgnore
+                private static final ObjectMapper objectMapper = new ObjectMapper();
+                public static void saveJSON(File toFile, SerializeObject musicObject) throws Exception {
+                    objectMapper.writeValue(toFile, musicObject);
+                }
+                File musicFile = new File("musicPattern.json");
+
+                try {
+
+                    SavePattern.saveJSON(musicFile, currentPattern);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
+        }
+    } //close SavePattern
+
+
+    public class SerializeObject {
+
+        public SerializeObject(/*paramters if separating into classes*/) {
+
+
+            // String instrument overlay- missing from master now? = object of instrumnet name;
+
+
+            boolean[] checkboxState = new boolean[256];
+
+            for (int i = 0; i < 256; i++) {
+
+                //Walk through the checkboxList (ArrayList of checkboxes), and
+                // get the state of each one, and add it to the boolean array.
+                JCheckBox check = (JCheckBox) checkboxList.get(i);
+                if (check.isSelected()) {
+                    checkboxState[i] = true;
+                }
+            }
+        }
+
+
+
+    } //close SerializeObject
+
+
+
+
+    public class RestorePattern{
+
+
+        public class /*restore button name*/ implements ActionListener {
+
+
+            public void actionPerformed(ActionEvent e) {
+
+                //Handle file open button action
+                if (e.getSource() == /*restore button*/) {
+                    final JFileChooser fc = new JFileChooser();
+                    int returnVal = fc.showOpenDialog(FileChooserDemo.this);
+
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File newFile = fc.getSelectedFile();
+                        log.append("Opening: " + newFile.getName() + "." + newline);
+                    } else {
+                        log.append("Open command cancelled by user." + newline);
+                    }
+
+
+                }
+
+
+
+            }
+        }
+    } //close RestorePattern
+
+    public class DeserializePattern{
+
+        boolean[] checkboxState = null;
+        //String object set null
+
+        public static DeserializePattern loadJSON(File file) throws Exception{
+
+            return objectMapper.readValue(file, SerializeObject.class);
+        }
+
+
+        DeserializePattern retrievedPattern = DeserializePattern.loadJSON(newFile);
+
+        // object name of overlay intsrument = "string object" .retrievedPattern;
+
+
+                    for (int i = 0; i < 256; i++); {
+            // Now restore the state of each of the checkboxes
+            // in the ArrayList of actual JCheckBox objects (checkboxList).
+            JCheckBox check = (JCheckBox) checkboxList.get(i);
+            if (checkboxState.retrievedPattern[i]) {
+                check.setSelected(true);
+            } else {
+                check.setSelected(false);
+            }
+        }
+
+    }
+} // close class
+}
